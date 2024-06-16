@@ -8,7 +8,7 @@ export default async function handler(
     res: NextApiResponse
 ) {
     try {
-        const {continuationToken} = req.query;
+        const {continuationToken, folder} = req.query;
 
         const s3Client = new S3Client({
             credentials: {
@@ -23,7 +23,7 @@ export default async function handler(
             client: s3Client
         }, {
             Bucket: env.AWS_BUCKET,
-            Prefix: "medias/",
+            Prefix: "medias/" + folder + '/',
             ContinuationToken: (continuationToken || undefined) as string | undefined,
             MaxKeys: 20
         });
