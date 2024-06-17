@@ -9,20 +9,20 @@ interface IFolder {
 
 const folders: IFolder[] = [
     {
-        title: 'Photoboot',
-        path: 'photoboot',
-    },
-    {
-        title: 'Photos prises par Yvan',
-        path: 'yvan',
-    },
-    {
-        title: 'Photos prises par KCP',
+        title: 'KCP',
         path: 'kcp',
     },
     {
-        title: 'Photos prises par Stéphane',
+        title: 'Yvan',
+        path: 'yvan',
+    },
+    {
+        title: 'Stéphane',
         path: 'stephane',
+    },
+    {
+        title: 'Photoboot',
+        path: 'photoboot',
     }
 ]
 
@@ -30,7 +30,7 @@ export default function SelectList() {
     const router = useRouter();
     return (
         <Tabs>
-            <TabList>
+            <TabList justifyContent={'center'}>
                 {folders.map(folder => (
                     <Tab
                         key={`tab-${folder.path}`}

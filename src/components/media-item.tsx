@@ -4,26 +4,26 @@ import Image from "next/image"; // Utilisation du composant Image de Next.js
 
 interface MediaItemProps {
     uri: string
+    onSelect: () => void
 }
 
-export default function MediaItem({uri}: MediaItemProps) {
+export default function MediaItem({uri, onSelect}: MediaItemProps) {
     const [isLoading, setIsLoading] = useState(true);
 
     return (
         <Skeleton isLoaded={!isLoading} width={162} height={240}>
             <Image
-                onClick={() => alert(uri)}
+                onClick={onSelect}
                 src={uri}
                 alt={`media`}
                 width={162}
                 height={240}
-                onLoadingComplete={() => setIsLoading(false)}
+                onLoad={() => setIsLoading(false)}
                 style={{
                     cursor: 'pointer',
                     objectFit: 'cover',
                     width: 162,
                     height: 240,
-                    borderRadius: 5
                 }}
             />
         </Skeleton>

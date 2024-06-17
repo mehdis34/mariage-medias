@@ -4,7 +4,9 @@ export default function Document() {
     return (
         <Html lang="fr">
             <Head/>
-            <body>
+            <body style={{
+                overflowY: 'scroll'
+            }}>
             <Main/>
             <NextScript/>
             </body>
