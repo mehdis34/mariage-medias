@@ -56,8 +56,8 @@ type PropType = PropsWithChildren<
 export const PrevButton: React.FC<PropType> = (props) => {
     const {children, ...restProps} = props
     return (
-        <Button {...restProps} height={50} width={50} rounded={'full'} autoFocus={false}>
-            <ChevronLeft/>
+        <Button {...restProps} height={50} width={50} rounded={'full'} autoFocus={false} backgroundColor={'white'}>
+            <ChevronLeft color={'black'} size={30}/>
         </Button>
     )
 }
@@ -65,8 +65,8 @@ export const PrevButton: React.FC<PropType> = (props) => {
 export const NextButton: React.FC<PropType> = (props) => {
     const {children, ...restProps} = props
     return (
-        <Button {...restProps} height={50} width={50} rounded={'full'} autoFocus={false}>
-            <ChevronRight/>
+        <Button {...restProps} height={50} width={50} rounded={'full'} autoFocus={false} backgroundColor={'white'}>
+            <ChevronRight color={'black'} size={30}/>
         </Button>
     )
 }

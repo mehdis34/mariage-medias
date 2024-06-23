@@ -1,7 +1,9 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {GetObjectCommand, paginateListObjectsV2, S3Client} from "@aws-sdk/client-s3";
+import {GetObjectCommand, paginateListObjectsV2} from "@aws-sdk/client-s3";
 import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
 import {env} from "../../../../env.mjs";
+import s3Client from "../../../../utils/aws-config";
+import mime from "mime-types";
 
 export default async function handler(
     req: NextApiRequest,
@@ -10,13 +12,6 @@ export default async function handler(
     try {
         const {continuationToken, folder} = req.query;
 
-        const s3Client = new S3Client({
-            credentials: {
-                accessKeyId: env.AWS_API_KEY,
-                secretAccessKey: env.AWS_API_SECRET
-            },
-            region: env.AWS_PREFERRED_REGION,
-        });
         const files = [];
 
         const paginator = paginateListObjectsV2({
@@ -38,9 +33,11 @@ export default async function handler(
                     Key: file.Key
                 });
                 const url = await getSignedUrl(s3Client, command, {expiresIn: 3600});
+                const fileType = mime.lookup(file.Key as string) || 'application/octet-stream';
                 return {
                     key: file.Key,
-                    url
+                    url,
+                    type: fileType
                 };
             }));
             files.push(...fileUrls);

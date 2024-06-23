@@ -2,6 +2,7 @@ import {Box, Drawer, DrawerBody, DrawerContent, DrawerOverlay, Flex} from "@chak
 import React, {useEffect} from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
+import ReactPlayer from "react-player";
 import {NextButton, PrevButton, usePrevNextButtons} from "@/drawers/carousel-buttons";
 import {X} from "react-feather";
 
@@ -42,35 +43,45 @@ export default function CarouselDrawer({medias, currentIndex, isOpen, onClose}: 
     }, [onPrevButtonClick, onNextButtonClick]);
 
     return (
-        <Drawer
-            isOpen={isOpen}
-            size={'full'}
-            onClose={onClose}
-        >
+        <Drawer isOpen={isOpen} size={'full'} onClose={onClose}>
             <DrawerOverlay/>
             <DrawerContent>
                 <DrawerBody p={0}>
                     <div className="embla" ref={emblaRef} style={{overflow: 'hidden', height: '100vh'}}>
                         <div className="embla__container" style={{display: 'flex', height: '100%'}}>
-                            {medias.map((media, index) => (
-                                <div className="embla__slide" key={`media${index}`} style={{
-                                    flex: '0 0 100%',
-                                    minWidth: '0',
-                                    position: 'relative',
-                                    height: '100%'
-                                }}>
-                                    <Image
-                                        src={media.url}
-                                        alt={`media ${index}`}
-                                        layout="fill"
-                                        objectFit="contain"
-                                        style={{
-                                            width: '100%',
-                                            height: '100%'
-                                        }}
-                                    />
-                                </div>
-                            ))}
+                            {medias.map((media, index) => {
+                                const isVideo = media.type.startsWith("video");
+
+                                return (
+                                    <div className="embla__slide" key={`media${index}`} style={{
+                                        flex: '0 0 100%',
+                                        minWidth: '0',
+                                        position: 'relative',
+                                        height: '100%'
+                                    }}>
+                                        {isVideo ? (
+                                            <ReactPlayer
+                                                url={media.url}
+                                                width='100%'
+                                                height='100%'
+                                                controls
+                                                style={{position: 'absolute', top: 0, left: 0}}
+                                            />
+                                        ) : (
+                                            <Image
+                                                src={media.url}
+                                                alt={`media ${index}`}
+                                                layout="fill"
+                                                objectFit="contain"
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%'
+                                                }}
+                                            />
+                                        )}
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                     <Flex
@@ -82,11 +93,13 @@ export default function CarouselDrawer({medias, currentIndex, isOpen, onClose}: 
                         top={0}
                         p={5}
                     >
-                        <X size={30} onClick={onClose} style={{cursor: 'pointer'}}/>
+                        <Box backgroundColor={'white'} rounded={'full'} p={1}>
+                            <X size={30} onClick={onClose} style={{cursor: 'pointer'}} color={'#000'}/>
+                        </Box>
                     </Flex>
                     <Box
                         position="absolute"
-                        zIndex={1}
+                        zIndex={9}
                         top="50%"
                         width="100%"
                         display={{base: 'none', md: 'flex'}}
