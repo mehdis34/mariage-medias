@@ -24,7 +24,9 @@ export default function Page() {
                     </>
                 ) : (
                     <Flex alignItems={'center'} flexDir={'column'} gap={10} mb={10}>
-                        <Heading textAlign={'center'}>Sélectionnez un dossier</Heading>
+                        <Heading textAlign={'center'} fontSize={'x-large'}>
+                            Sélectionnez un dossier pour voir les photos et vidéos associées
+                        </Heading>
                         <SimpleGrid columns={[1, 2, 3, 5]} spacing={3}>
                             {providers.map((provider, index) => (
                                 <Flex
@@ -35,7 +37,7 @@ export default function Page() {
                                     width={162}
                                     height={240}
                                     backgroundColor={'gray.900'}>
-                                    <Text>{provider.title}</Text>
+                                    <Text fontWeight={600}>{provider.title}</Text>
                                 </Flex>
                             ))}
                         </SimpleGrid>
