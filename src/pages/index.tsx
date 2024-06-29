@@ -37,7 +37,7 @@ export default function Page() {
                                     width={162}
                                     height={240}
                                     backgroundColor={'gray.900'}>
-                                    <Text fontWeight={600}>{provider.title}</Text>
+                                    <Text fontWeight={600} color={'white'}>{provider.title}</Text>
                                 </Flex>
                             ))}
                         </SimpleGrid>
